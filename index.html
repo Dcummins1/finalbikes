@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Dublin Bikes</title>
+        
+    </head>
+    <body onload="load()">
+        
+    <script>
+        function load() {
+            var xmlhttp = new XMLHttpRequest();
+            var url = 'Dublin.json';
+            alert("1");
+
+
+
+            xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    var arr = JSON.parse(xmlhttp.responseText);
+                    alert("2");
+                    myFunction(arr);
+
+                }
+            };
+            xmlhttp.open("GET", url, true);
+            xmlhttp.send();
+        
+
+        }
+        function myFunction(arr) {
+            var out = "";
+            alert(arr[0].latitude);}
+        
+        
+        
+        
+        
+        
+        </script>
+        
+    </body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="forecaster.css">
+    <title>DublinBikes</title>
+</head>
+
+
+<body onload="load()" ) <header> Dublin Bikes<br></header>
+
+    <div id="wrap">
+        <div id="map" style="width:800px;height:600px;"></div>
+
+        <script>
+            function load() {
+                var xmlhttp = new XMLHttpRequest();
+                var url = 'Dublin.json';
+                //alert("1");
+
+
+
+                xmlhttp.onreadystatechange = function() {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                        var arr = JSON.parse(xmlhttp.responseText);
+                        //alert("2");
+                        myMap(arr);
+                        //                    myFunction(arr);
+
+                    }
+                };
+                xmlhttp.open("GET", url, true);
+                xmlhttp.send();
+
+
+            }
+
+            function myFunction(arr) {
+                var out = "";
+            }
+
+
+
+
+
+
+
+
+            function myMap(arr) {
+                var out = "";
+                var mapCanvas = document.getElementById("map");
+                var mapOptions = {
+                    center: new google.maps.LatLng(53.3498, -6.2603),
+                    zoom: 14
+                }
+                //Taken from http://www.svennerberg.com/2012/03/adding-multiple-markers-to-google-maps-from-json/
+                var map = new google.maps.Map(mapCanvas, mapOptions);
+                var infoWindow = new google.maps.InfoWindow();
+                for (var i = 0, length = arr.length; i < length; i++) {
+                    var data = arr[i],
+                        latLng = new google.maps.LatLng(data.latitude, data.longitude);
+
+                    var marker = new google.maps.Marker({
+                        position: latLng,
+                        map: map
+
+                    });
+                    (function(marker, data) {
+                        google.maps.event.addListener(marker, "mouseover", function(e) {
+                            infoWindow.setContent("Number: "+data.number+"<br/>"+ data.name);
+                            infoWindow.open(map, marker);
+                            
+                        });
+//                        marker.addListener('mouseout', function(e) {
+//                        infowindow.close();});
+//                        
+
+                    })(marker, data);
+                }
+            }
+
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script>
+        <div id="myday"></div>
+        <footer></footer>
+</body>
+
+</html>
