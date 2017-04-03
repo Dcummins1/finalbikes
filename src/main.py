@@ -37,10 +37,10 @@ def populate():
         sql = '''CREATE TABLE IF NOT EXISTS dublin_bikes_dynamic_updated(
         number INT(4) NOT NULL,
         name VARCHAR(45) NOT NULL,
-        status VARCHAR(10) NOT NULL,
         banking VARCHAR(45) NOT NULL,
-        bike_stands INT(4) NOT NULL,
         bonus VARCHAR(45) NOT NULL,
+        status VARCHAR(10) NOT NULL,
+        bike_stands INT(4) NOT NULL,
         available_bike_stands INT(4) NOT NULL,
         available_bikes INT(4) NOT NULL,        
         last_update BIGINT(15) NOT NULL
