@@ -52,6 +52,7 @@ def populate():
         for i in range(101):
             rowlist = [] 
             line = result[i]
+            print(line.items())
             for a,b in line.items():
                 temp = b
                 if a == "position" or a== "address" or a =="contract_name":   
