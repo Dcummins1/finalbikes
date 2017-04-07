@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="../static/bikes.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    <script src="/js/plugins/openWeather.js"></script>
+    <title>DublinBikes</title>
+</head> 
+
+
+<body onload="load()">
+
+    <header id="header"> Dublin Bikes<br></header>
+
+    <div id="wrap">
+        <div id="map" style="width:800px;height:600px;"></div>
+        <!--        Widget from openweathermap fine for now I guess-->
+        <div id='openweathermap-widget'></div>
+        <script type='text/javascript'>
+            window.myWidgetParam = {
+                id: 15,
+                cityid: 2964574,
+                appid: '0788f736465a29ac1be4ee900398fddd',
+                units: 'metric',
+                containerid: 'openweathermap-widget',
+            };
+            (function() {
+                var script = document.createElement('script');
+                script.type = 'text/javascript';
+                script.async = true;
+                script.src = 'http://openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(script, s);
+            })();
+
+        </script>
+<script>
+
+    function postData(input) {
+        $.ajax({
+                type: "POST",
+                url: "/reverse_pca.py",
+                data: {
+                param: input
+                    },
+                success: callbackFunc
+                });
+            }
+
+            function callbackFunc(response) {
+                // do something with the response
+                console.log(response);
+            }
+
+            postData('data to process');
+
+            function load() {
+                var xmlhttp = new XMLHttpRequest();
+                var url = '../static/Dublin.json';
+                //alert("1");
+
+
+
+                xmlhttp.onreadystatechange = function() {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                        var arr = JSON.parse(xmlhttp.responseText);
+                        //alert("2");
+                        myMap(arr);
+                        //                    myFunction(arr);
+
+                    }
+                };
+                xmlhttp.open("GET", url, true);
+                xmlhttp.send();
+
+
+            }
+
+            function myFunction(arr) {
+                var out = "";
+            }
+
+
+
+
+            
+
+
+
+            function myMap(arr) {
+                var out = "";
+                var mapCanvas = document.getElementById("map");
+                var mapOptions = {
+                        center: new google.maps.LatLng(53.3498, -6.2603),
+                        zoom: 14
+                    }
+                    //Taken from http://www.svennerberg.com/2012/03/adding-multiple-markers-to-google-maps-from-json/
+                var map = new google.maps.Map(mapCanvas, mapOptions);
+                var infoWindow = new google.maps.InfoWindow();
+                for (var i = 0, length = arr.length; i < length; i++) {
+                    var data = arr[i],
+                        latLng = new google.maps.LatLng(data.latitude, data.longitude);
+
+                    var marker = new google.maps.Marker({
+                        position: latLng,
+                        map: map
+
+                    });
+                    (function(marker, data) {
+                        google.maps.event.addListener(marker, "mouseover", function(e) {
+                            infoWindow.setContent("Number: " + data.number + "<br/>" + data.name);
+                            infoWindow.open(map, marker);
+                           
+        });     
+                         marker.addListener('click', function() {
+                            var stand_no = data.number;
+                            infoWindow.setContent("Fuck off");
+                            infoWindow.open(map, marker);
+                            submitnumber(stand_no);
+                            
+
+                        });
+                        //                        marker.addListener('mouseout', function(e) {
+                        //                        infowindow.close();});
+                        //                        
+
+                    })(marker, data);
+                }
+            }
+    
+    
+    function submitnumber(x) {  // This function takes in x the stand number an calls queries.python with x as its argument
+            //document.getElementById("input").style.display = "block";
+            alert(x);
+        }
+
+        </script>
+<input type="text" name="name" id="name">
+<button type="button" id="home" onclick="validate()" value="checkvalue">
+<script>
+
+    
+
+</script>
+        <script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script>
+        <div id="myday"></div>
+        <footer id="footer"></footer>
+</body>
+
+</html>
