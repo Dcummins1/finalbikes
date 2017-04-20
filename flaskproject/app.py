@@ -13,6 +13,8 @@ def root():
     return render_template('DublinBikes.html')
     
 
+    
+
 
 @app.route("/test/<int:stand_no>", methods=['GET'])
 def avail(stand_no):      

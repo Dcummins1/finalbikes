@@ -32,20 +32,22 @@ def availability(x):
         curs.execute(sql)
         data = []
         for row in curs.fetchall():
-            print (row)
+            row = row
+        
+        return jsonify(available = row)
             #for column in row:
             #data.append(dict(row))
         #return jsonify(available = data)   
         
         
         
-        labels = 'Available Bikes {0}'.format(row[4]), 'Unavailable Bikes {0}'.format(row[5])
-        sizes = [row[4], row[5]]
-        colors = ['yellowgreen', 'teal']
-        plt.title('{0}, ({1}) \n Status:{2} \n {3}'.format(row[1], row[0], row[2], 3)) 
-         
-        plt.pie(sizes, labels=labels, colors=colors, autopct=None ,startangle=140)
-        patches, texts = plt.pie(sizes, colors=colors)
-        plt.legend(patches, labels, loc="best") 
-        plt.axis('equal')
-        return plt.show()
+#         labels = 'Available Bikes {0}'.format(row[4]), 'Unavailable Bikes {0}'.format(row[5])
+#         sizes = [row[4], row[5]]
+#         colors = ['yellowgreen', 'teal']
+#         plt.title('{0}, ({1}) \n Status:{2} \n {3}'.format(row[1], row[0], row[2], 3)) 
+#           
+#         plt.pie(sizes, labels=labels, colors=colors, autopct=None ,startangle=140)
+#         patches, texts = plt.pie(sizes, colors=colors)
+#         plt.legend(patches, labels, loc="best") 
+#         plt.axis('equal')
+#         return plt.show()
