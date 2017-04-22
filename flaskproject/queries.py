@@ -4,6 +4,7 @@ import src.rds_config
 import pymysql
 import matplotlib.pyplot as plt
 from flask import jsonify
+import time
  
 
 rds_host = src.rds_config.db_endpoint
@@ -25,6 +26,8 @@ except:
     logger.error("ERROR: Unexpected error: Could not connect to MySql instance.")
     test = False
     sys.exit()
+
+
 def availability(x):    
     while test == True:
         #x = int(input('enter stop number'))
@@ -35,6 +38,25 @@ def availability(x):
             row = row
         
         return jsonify(available = row)
+    
+    
+def weekly(x):
+    #returns day index, Monday = 0
+    days = []
+    for y in range(7):
+          
+        sql = """select AVG(available_bikes) from dublin_bikes_dynamic 
+                WHERE number = {0} 
+                AND ((from_unixtime(last_update/1000, '%w') 
+                Between {1}
+                and {2}))
+                ORDER BY last_update DESC Limit 1;""".format(x, y, y+1)
+        curs.execute(sql)
+        day = int(curs.fetchall()[0][0])
+        
+        days.append(day)
+    days.append(x)
+    return jsonify(daily_average = days)
             #for column in row:
             #data.append(dict(row))
         #return jsonify(available = data)   
@@ -51,3 +73,16 @@ def availability(x):
 #         plt.legend(patches, labels, loc="best") 
 #         plt.axis('equal')
 #         return plt.show()
+
+# def history(x):    
+#     while test == True:
+#         #x = int(input('enter stop number'))
+#         now = time.time()
+#         print(now)
+#         sql = "SELECT * From dublin_bikes_dynamic WHERE number = {0} ORDER BY last_update DESC Limit 1;".format(x)
+#         curs.execute(sql)
+#         data = []
+#         for row in curs.fetchall():
+#             row = row
+#         
+#         return jsonify(available = row)

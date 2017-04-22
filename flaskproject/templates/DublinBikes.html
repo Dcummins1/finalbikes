@@ -5,21 +5,30 @@
     <link rel="stylesheet" type="text/css" href="../static/bikes.css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript"></script>
-
     <script src="/js/plugins/openWeather.js"></script>
+    <script>
+
+  setTimeout(function() {
+    $('#myDiv').hide();
+}, 12000);</script>
+    
+    
+    
     <title>DublinBikes</title>
 </head> 
-
-
 <body onload="load()">
 
     <header id="header"> Dublin Bikes<br></header>
 
     <div id="wrap">
-        <div id="map" style="width:800px;height:600px;"></div>
+        
+        <div id="map"></div>
+        <div id="moreinfo">
+        <div id="chart_div">
+        <div id = "myDiv"><h3>Please wait for data to load</h3><img id = "loading-bikes" src = "../static/loading-bikes.gif" alt="Please wait for data to load" style="width:300px;height:300px;"></div>
+        </div>
         <!--        Widget from openweathermap fine for now I guess-->
-        <div id='openweathermap-widget'></div>
+            <div id='openweathermap-widget'></div> </div>
         <script type='text/javascript'>
             window.myWidgetParam = {
                 id: 15,
@@ -92,6 +101,7 @@
                 'title': z
                 , 'width': 400
                 , 'height': 300
+                
             };
             // Instantiate and draw our chart, passing in some options.
             var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
@@ -122,19 +132,7 @@
                         map: map
                         
                     });
-                    var jqxhr = $.getJSON("/test/" + data.number+"",
- function(current) {
- //alert(current.available[1]);
- var bikes = current.available;
- var standname = bikes[1];
- var status = bikes[2];
- var stands = bikes[3];
- var available = bikes[4];
- var unavailable = bikes[5];
- var timestamp = bikes[6];
- }).fail(function() {
- console.log( "error" );
- }); 
+                    
                      
                     (function(marker, data) {
                         
@@ -157,20 +155,11 @@
  var unavailable = bikes[5];
  var timestamp = bikes[6];
  drawChart(available, unavailable, standname);
- infoWindow.setContent(""+available+"");
+ infoWindow.setContent("<button onclick='submitnumber("+stand_no+")'>More Info</button>");
  infowindow.open(map, marker);                       
-                        
-                        
-                        
-                        
- }).fail(function() {
+}).fail(function() {
  console.log( "error" );
- }); 
-                         	
-                            //infoWindow.setContent(""+status+"");
-                            //infowindow.open(map, marker);
-                            //submitnumber(stand_no);
-                            
+ });                            
 
                         });                        
 
@@ -178,28 +167,20 @@
                 }
             }
     
-    
- //   function submitnumber(x) {  // This function takes in x the stand number an calls queries.python with x as its argument
-            //document.getElementById("input").style.display = "block";
-            //alert(x);
-    //        window.location = "/test/"+x+"";
- //       }   may need later
  
   function submitnumber(x) {  // This function takes in x the stand number an calls queries.python with x as its argument from a seperate url
-      alert("hi")
-      var infoWindow = new google.maps.InfoWindow();
-      infoWindow.setContent("Hello");
-      infowindow.open(marker.getMap(), marker); 
-            var jqxhr = $.getJSON("/test/" + x+"",
+     alert(x);
+            var jqxhr = $.getJSON("/weekly/" + x+"",
  function(data) {
- var bikes = data.available;
- var standname = bikes[1];
- var status = bikes[2];
- var stands = bikes[3];
- var available = bikes[4];
- var unavailable = bikes[5];
- var timestamp = bikes[6];
- //alert("Available bikes:"+""+available+"");
+ var weekly = data.daily_average;
+ var mon = weekly[0];
+ var tues = weekly[1];
+ var wed = weekly[2];
+ var thurs = weekly[3];
+ var fri = weekly[4];
+ var sat = weekly[5];
+ var sun = weekly[6];
+ alert("Available bikes:"+""+sun+"");
     
  //alert(jqxhr);
  //var infoWindow= new google.maps.InfoWindow();
@@ -211,18 +192,11 @@
         }
 
         </script>
-<input type="text" name="name" id="name">
-<button type="button" id="home" onclick="validate()" value="checkvalue">
-<script>
 
-    
-
-</script>
         <script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script>
-        <!--Div that will hold the pie chart-->
-        <div id="chart_div" style="width:400; height:300"></div>
         
-        <div id="myday"></div>
+        
+        
         <footer id="footer"></footer>
 </body>
 
