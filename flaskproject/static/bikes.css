@@ -1,6 +1,7 @@
+
+
 header { 
     background-size: cover;
-/*    background-image: url("header.png");*/
     height:55px;
     max-width:1000px;
     min-width: 800px;
@@ -21,7 +22,6 @@ header {
     height:auto;
     max-width:1000px;
     min-width: 800px;
-    font-family: 'Verdana';
     margin: auto;
     border-left: 2px solid teal;
     border-right: 2px solid teal;
@@ -35,13 +35,14 @@ header {
     min-width: 800px;
     font-family: 'Verdana';
     margin: auto;
-    border-left: 2px solid teal;
-    border-right: 2px solid teal;
+    
 }
 
 #map {
     width:1000px;
     height:550px;
+    border-left: 2px solid teal;
+    border-right: 2px solid teal;
     
 }
 #moreinfo {
@@ -63,7 +64,6 @@ header {
     color: navy;
     height:auto;
     width:auto;
-    font-family: 'Verdana';
     
 }
 
@@ -74,16 +74,34 @@ header {
     height:auto;
     width:auto;
     margin: auto;
+
    
 }
 
+#chart1_div {
+    display:none;
+    width:500px;
+    height:300px;
+    opacity:1;
+    background-color:white;
+    position:relative;
+    z-index:0;
+    margin:0;
+    padding:0, 50pc, 50px, 10px;
+}
+#btn {
+    display:none;
+}
+
+
 #myDiv {  
     opacity:0.8;
-    float: right;
+    position:absolute;
+    right:300px;
     color: navy;
     height:300px;
-    width:400px;
-    margin:0, 20px;
+    width:300px;
+    margin:0;
     z-index:1000;
 }
 

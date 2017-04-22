@@ -1,3 +1,6 @@
+#used entirely for testing
+
+
 import sys
 import logging
 from src import rds_config

@@ -62,7 +62,7 @@ def weekly(x):
         #return jsonify(available = data)   
         
         
-        
+# Experiments with matplotlib and seperate queries. This was the initial live data analysis      
 #         labels = 'Available Bikes {0}'.format(row[4]), 'Unavailable Bikes {0}'.format(row[5])
 #         sizes = [row[4], row[5]]
 #         colors = ['yellowgreen', 'teal']

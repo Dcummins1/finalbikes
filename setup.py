@@ -9,5 +9,5 @@ setup(name="dublinbikes",
       license="GPL3",
       packages=['src'],
       entry_points={
-          'console_scripts':['dublinbikes=src.main:populate'] 
+          'console_scripts':['dublinbikes=src.main:populate'] #used to activate scraper
                 })
